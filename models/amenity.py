@@ -1,21 +1,16 @@
-#!/usr/bin/python
-""" holds class Amenity"""
-import models
+#!/usr/bin/python3
+""" Amenity class definition """
+from models import storage_t
 from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 
 class Amenity(BaseModel, Base):
-    """Representation of Amenity """
-    if models.storage_t == 'db':
-        __tablename__ = 'amenities'
-        name = Column(String(128), nullable=False)
-    else:
-        name = ""
+    """ Amenity entity representation """
+    __tablename__ = 'amenities' if storage_t == 'db' else ''
+    name = Column(String(128), nullable=False) if storage_t == 'db' else ''
 
-    def __init__(self, *args, **kwargs):
-        """initializes Amenity"""
-        super().__init__(*args, **kwargs)
+    def __init__(self, **kwargs):
+        """ Initializes Amenity instance """
+        super(Amenity, self).__init__(**kwargs)
