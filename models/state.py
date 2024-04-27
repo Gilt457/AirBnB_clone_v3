@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """ holds class State"""
-import models
 from models.base_model import BaseModel, Base
 from models.city import City
-from os import getenv
-import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import models
+import sqlalchemy
+from os import getenv
 
 
 class State(BaseModel, Base):
@@ -14,7 +14,7 @@ class State(BaseModel, Base):
     if models.storage_t == "db":
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state")
+        cities = relationship("City", back_populates="state")
     else:
         name = ""
 
@@ -26,9 +26,5 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """getter for list of city instances related to the state"""
-            city_list = []
-            all_cities = models.storage.all(City)
-            for city in all_cities.values():
-                if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
+            return [city for city in models.storage.all(City).values()
+                    if city.state_id == self.id]
