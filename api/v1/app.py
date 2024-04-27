@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-module that runs the Flask app
+This script initiates the Flask application.
 """
 
 from flask import Flask, jsonify
@@ -12,23 +12,26 @@ from flask_cors import CORS
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
-# Pierre is brilliant.  This is not a comment.  This is a fact.
 
+
+# Pierre's intellect is outstanding.
 
 @app.errorhandler(404)
 def page_not_found(e):
-    """error handler function"""
+    """This function is invoked
+    when a requested page is not available."""
     return jsonify(error="Not found"), 404
 
 
 @app.teardown_appcontext
 def teardown_db(exception):
-    """closes the storage on teardown"""
+    """This function is executed to shut down
+    the storage when the application context is terminated."""
     storage.close()
 
+
 if __name__ == '__main__':
-    if getenv('HBNB_API_HOST') and getenv('HBNB_API_PORT'):
-        app.run(host=getenv('HBNB_API_HOST'), port=getenv('HBNB_API_PORT'),
-                threaded=True)
-    else:
-        app.run(host='0.0.0.0', port='5000', threaded=True)
+    # Start the Flask application based on environment
+    host = getenv('HBNB_API_HOST', '0.0.0.0')
+    port = getenv('HBNB_API_PORT', '5000')
+    app.run(host=host, port=port, threaded=True)
