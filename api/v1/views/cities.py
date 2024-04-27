@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-view for City objects that handles all default RestFul API actions
+This is a view for City objects that manages
+all standard RestFul API operations.
 """
 from flask import jsonify, abort, request
 from models import storage
@@ -11,7 +12,10 @@ from models.city import City
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
                  strict_slashes=False)
 def handle_cities(state_id):
-    """Retrieves the list of all City objects or create a new City object"""
+    """
+    This function either fetches a list of all
+    City objects or creates a new City object.
+    """
     state_obj = storage.get("State", state_id)
     if state_obj:
         if request.method == 'GET':
@@ -34,7 +38,10 @@ def handle_cities(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def city_byid(city_id):
-    """Retrieves a City object by id, delete or update a City object"""
+    """
+    This function either fetches a City object by its id,
+     deletes it, or updates it.
+    """
     city_obj = storage.get("City", city_id)
     if city_obj:
         if request.method == 'GET':

@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """
-view for Place objects that handles all default RestFul API actions
+This is a view for Place objects that manages all standard RestFul API actions.
 
-Potentially add 3 optional keys for 16(Advanced):
-states: list of State ids
-cities: list of City ids
-amenities: list of Amenity ids
+For advanced usage, consider adding three optional keys:
+states: a list of State ids
+cities: a list of City ids
+amenities: a list of Amenity ids
 """
 from flask import jsonify, abort, request
 from models import storage
@@ -16,7 +16,7 @@ from models.place import Place
 @app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'],
                  strict_slashes=False)
 def handle_places(city_id):
-    """Retrieves the list of all Place objects or create a new Place object"""
+    """Fetches all Place objects or creates a new one"""
     city_obj = storage.get("City", city_id)
     if city_obj:
         if request.method == 'GET':
@@ -45,7 +45,7 @@ def handle_places(city_id):
 @app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def place_byid(place_id):
-    """Retrieves a Place object by id, delete or update a Place object"""
+    """Fetches, deletes, or updates a Place object by its id"""
     place_obj = storage.get("Place", place_id)
     if place_obj:
         if request.method == 'GET':
