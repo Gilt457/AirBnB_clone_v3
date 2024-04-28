@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-view for Review objects that handles all default RestFul API actions
+RestFul API view for Review objects handles all default actions
 """
 from flask import jsonify, abort, request
 from models import storage
@@ -11,8 +11,7 @@ from models.review import Review
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'],
                  strict_slashes=False)
 def handle_reviews(place_id):
-    """Retrieves the list of all Review objects or
-    create a new Review object"""
+    """Returns all Review objects or creates a new one."""
     place_obj = storage.get("Place", place_id)
     if place_obj:
         if request.method == 'GET':
@@ -41,7 +40,7 @@ def handle_reviews(place_id):
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def review_byid(review_id):
-    """Retrieves a Review object by id, delete or update a Review object"""
+    """Retrieves, deletes, or updates Review objects by id."""
     review_obj = storage.get("Review", review_id)
     if review_obj:
         if request.method == 'GET':

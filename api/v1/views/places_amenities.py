@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-view for the link between Place objects and Amenity objects that handles
-all default RestFul API actions
+This view handles all RestFul API activities
+for the relationship between Place and Amenity objects.
 """
 from flask import jsonify, abort, request
 from models import storage
@@ -16,8 +16,8 @@ from os import getenv
                  methods=['DELETE', 'POST'], strict_slashes=False)
 def handle_places_amenities(place_id, amenity_id=None):
     """
-    Retrieves the list of all Amenity objects of a Place,
-    delete or create an Amenity object of a Place
+    Gets the list of all Place Amenity objects,
+    enables deletion or creation.
     """
     place_obj = storage.get("Place", place_id)
     if place_obj:
